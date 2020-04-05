@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Embed Image Downloader</title>
+    <link rel="shortcut icon" href="embeb.png" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div class="container">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark mt-1 mb-1">
+        <a class="navbar-brand" href="index.html">Embed Image Download</a>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+			  <li class="nav-item active">
+				<a class="nav-link" href="about.html">How to use?</a>
+			  </li>
+			</ul>
+		</div>
+      </nav>
+      <div class="mt-3 alert d-none text-center" id="alert"></div>
+      <div class="mt-3">
+        <div class="row justify-content-center">
+          <div class="col-7">
+            <div class="row align-items-center">
+              <div class="col-8">
+                <textarea class="form-control" name="link" id="link" placeholder="Image Embed Link" style="width: 424px; height: 86px; font-size: 13px;"></textarea>
+              </div>
+              <div class="col-3">
+                <button id="fetch" class="btn btn-secondary">Fetch Image</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-3 border-top justify-content-center d-none" id="displayImage">
+        <div class="col-7 mt-3 pt-2 pb-2 border" align="center" id="image"></div>
+        <div class="w-100"></div>
+        <div class="col-2 mt-3 pt-2 pb-2" align="center" id="download">
+          <a href="#" download="img" class="btn btn-secondary border-primary w-100">Download</a>
+        </div>
+      </div>
+    </div>
+    <script>
+      $(document).ready(function () {
+        $("#fetch").click(function () {
+          var value = $("#link").val();
+          if (value.trim() == "" || !/^<img/i.test(value)) {
+            //empty
+            $("#alert").addClass("alert-danger").removeClass("d-none").text("Error. Invalid Embeded link");
+            setTimeout(function () {
+              $("#alert").addClass("d-none");
+            }, 10000);
+          } else {
+            //true
+            $("#displayImage").removeClass("d-none");
+            $("#image").html(value);
+            var split = value.split('"')[1];
+            var today = new Date();
+            var filename = "img_" + today.getFullYear() + "/" + today.getMonth() + 1 + "/" + today.getDate() + "_" + today.getHours() + "/" + today.getMinutes() + "/" + today.getSeconds()+".png";
+            $("#download>a").attr("href", split).attr("download", filename);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
